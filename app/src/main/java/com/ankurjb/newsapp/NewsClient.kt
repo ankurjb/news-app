@@ -1,10 +1,11 @@
 package com.ankurjb.newsapp
 
 import com.ankurjb.newsapp.model.Either
+import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class NewsClient(
+class NewsClient @Inject constructor(
     private val newsAPI: NewsAPI
 ) {
     suspend fun getTopNews() = withContext(Dispatchers.IO) {

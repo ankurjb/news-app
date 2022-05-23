@@ -8,9 +8,12 @@ import com.ankurjb.newsapp.latestnews.network.LatestNewsRepository
 import com.ankurjb.newsapp.model.Article
 import com.ankurjb.newsapp.model.Either
 import com.ankurjb.newsapp.model.News
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.launch
 
-class LatestNewsViewModel(
+@HiltViewModel
+class LatestNewsViewModel @Inject constructor(
     private val latestNewsRepository: LatestNewsRepository
 ) : ViewModel() {
 

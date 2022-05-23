@@ -2,25 +2,21 @@ package com.ankurjb.newsapp.latestnews
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.fragment.app.commit
-import com.ankurjb.newsapp.NewsClient
-import com.ankurjb.newsapp.RetrofitInstance
 import com.ankurjb.newsapp.base.ViewBindingActivity
 import com.ankurjb.newsapp.databinding.ActivityLatestNewsBinding
-import com.ankurjb.newsapp.latestnews.network.LatestNewsRepositoryImpl
 import com.ankurjb.newsapp.model.Article
 import com.ankurjb.newsapp.topnews.TopNewsActivity
-import com.ankurjb.newsapp.viewModelsFactory
+import dagger.hilt.android.AndroidEntryPoint
 
+
+@AndroidEntryPoint
 class LatestNewsActivity : ViewBindingActivity<ActivityLatestNewsBinding>(
     ActivityLatestNewsBinding::inflate
 ) {
 
-    private val viewModel: LatestNewsViewModel by viewModelsFactory {
-        val newsClient = NewsClient(RetrofitInstance.newsApi)
-        val repository = LatestNewsRepositoryImpl(newsClient)
-        LatestNewsViewModel(repository)
-    }
+    private val viewModel: LatestNewsViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
