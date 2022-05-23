@@ -2,12 +2,16 @@ package com.ankurjb.newsapp.topnews
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.fragment.app.add
+import androidx.fragment.app.commit
 import com.ankurjb.newsapp.NewsClient
 import com.ankurjb.newsapp.RetrofitInstance
 import com.ankurjb.newsapp.TopNewsRepositoryImpl
 import com.ankurjb.newsapp.base.ViewBindingActivity
 import com.ankurjb.newsapp.databinding.ActivityTopNewsBinding
 import com.ankurjb.newsapp.latestnews.LatestNewsActivity
+import com.ankurjb.newsapp.model.Article
+import com.ankurjb.newsapp.newsfragments.AbstractNewsDetailsFragment
 import com.ankurjb.newsapp.newsfragments.AbstractNewsListFragment
 
 class TopNewsActivity : ViewBindingActivity<ActivityTopNewsBinding>(
@@ -31,17 +35,35 @@ class TopNewsActivity : ViewBindingActivity<ActivityTopNewsBinding>(
         addNewsListFragment()
 
         viewModel.getTopNews()
+        viewModel.newsDetailsLiveData.observe(this) {
+            addNewsDetailsFragment(it)
+        }
     }
 
     private fun addNewsListFragment() {
         supportFragmentManager.findFragmentByTag(
             AbstractNewsListFragment.TAG
-        ) ?: supportFragmentManager
-            .beginTransaction()
-            .replace(
+        ) ?: supportFragmentManager.commit {
+            add(
                 binding.container.id,
                 AbstractNewsListFragment.build(),
                 AbstractNewsListFragment.TAG
-            ).commit()
+            )
+        }
+    }
+
+    private fun addNewsDetailsFragment(article: Article) {
+        supportFragmentManager.findFragmentByTag(
+            AbstractNewsDetailsFragment.TAG
+        ) ?: supportFragmentManager.commit {
+            addToBackStack("nju")
+            add(
+                binding.container.id,
+                AbstractNewsDetailsFragment.Companion.Args(
+                    article = article
+                ).build(),
+                AbstractNewsDetailsFragment.TAG
+            )
+        }
     }
 }

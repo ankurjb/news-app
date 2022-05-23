@@ -25,7 +25,7 @@ class AbstractNewsListFragment : ViewBindingFragment<FragmentNewsListBinding>(
         super.onViewCreated(view, savedInstanceState)
 
         adapter = NewsListAdapter {
-            viewModel
+            viewModel.updateNewsDetails(it)
         }
         binding.newsListRecyclerView.adapter = adapter
 

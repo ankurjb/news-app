@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.ankurjb.newsapp.TopNewsRepository
+import com.ankurjb.newsapp.model.Article
 import com.ankurjb.newsapp.model.Either
 import com.ankurjb.newsapp.model.TopNews
 import kotlinx.coroutines.launch
@@ -18,7 +19,10 @@ class TopNewsViewModel(
 ) : ViewModel() {
 
     private val _topNewsLiveData = MutableLiveData<Either<TopNews>>()
-    val topNewsLiveData: LiveData<Either<TopNews>> = _topNewsLiveData
+    internal val topNewsLiveData: LiveData<Either<TopNews>> = _topNewsLiveData
+
+    private val _newsDetailsLiveData = MutableLiveData<Article>()
+    internal val newsDetailsLiveData: LiveData<Article> = _newsDetailsLiveData
 
     fun getTopNews() {
         viewModelScope.launch {
@@ -27,6 +31,11 @@ class TopNewsViewModel(
             _topNewsLiveData.value = topNewsRepository.getTopNews()
             Log.d(TAG, "${_topNewsLiveData.value}")
         }
+    }
+
+    fun updateNewsDetails(article: Article) {
+        _newsDetailsLiveData.value = article
+        Log.d(TAG, "updateNewsDetails: ${newsDetailsLiveData.value}")
     }
 
     companion object {
