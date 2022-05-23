@@ -15,7 +15,7 @@ class TopNewsListFragment : AbstractNewsListFragment() {
         addObservers()
     }
 
-    fun addObservers() = with(viewModel) {
+    private fun addObservers() = with(viewModel) {
         topNewsLiveData.observe(viewLifecycleOwner) { response ->
             response?.let { updateUI(it) }
         }
