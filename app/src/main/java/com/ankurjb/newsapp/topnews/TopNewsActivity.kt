@@ -2,17 +2,15 @@ package com.ankurjb.newsapp.topnews
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.add
 import androidx.fragment.app.commit
 import com.ankurjb.newsapp.NewsClient
 import com.ankurjb.newsapp.RetrofitInstance
-import com.ankurjb.newsapp.TopNewsRepositoryImpl
 import com.ankurjb.newsapp.base.ViewBindingActivity
 import com.ankurjb.newsapp.databinding.ActivityTopNewsBinding
 import com.ankurjb.newsapp.latestnews.LatestNewsActivity
 import com.ankurjb.newsapp.model.Article
-import com.ankurjb.newsapp.newsfragments.AbstractNewsDetailsFragment
-import com.ankurjb.newsapp.newsfragments.AbstractNewsListFragment
+import com.ankurjb.newsapp.topnews.network.TopNewsRepositoryImpl
+import com.ankurjb.newsapp.viewModelsFactory
 
 class TopNewsActivity : ViewBindingActivity<ActivityTopNewsBinding>(
     ActivityTopNewsBinding::inflate
@@ -27,10 +25,7 @@ class TopNewsActivity : ViewBindingActivity<ActivityTopNewsBinding>(
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding.bottomBar.topNews.isEnabled = false
-        binding.bottomBar.latestNews.setOnClickListener {
-            startActivity(Intent(this, LatestNewsActivity::class.java))
-        }
+        setUpBottomBar()
 
         addNewsListFragment()
 
@@ -40,29 +35,36 @@ class TopNewsActivity : ViewBindingActivity<ActivityTopNewsBinding>(
         }
     }
 
+    private fun setUpBottomBar() = with(binding.bottomBar) {
+        topNews.isEnabled = false
+        latestNews.setOnClickListener {
+            startActivity(Intent(this@TopNewsActivity, LatestNewsActivity::class.java))
+        }
+    }
+
     private fun addNewsListFragment() {
         supportFragmentManager.findFragmentByTag(
-            AbstractNewsListFragment.TAG
+            TopNewsListFragment.TAG
         ) ?: supportFragmentManager.commit {
             add(
                 binding.container.id,
-                AbstractNewsListFragment.build(),
-                AbstractNewsListFragment.TAG
+                TopNewsListFragment.build(),
+                TopNewsListFragment.TAG
             )
         }
     }
 
     private fun addNewsDetailsFragment(article: Article) {
         supportFragmentManager.findFragmentByTag(
-            AbstractNewsDetailsFragment.TAG
+            TopNewsDetailsFragment.TAG
         ) ?: supportFragmentManager.commit {
-            addToBackStack("nju")
+            addToBackStack("TAG")
             add(
                 binding.container.id,
-                AbstractNewsDetailsFragment.Companion.Args(
+                TopNewsDetailsFragment.Companion.Args(
                     article = article
                 ).build(),
-                AbstractNewsDetailsFragment.TAG
+                TopNewsDetailsFragment.TAG
             )
         }
     }

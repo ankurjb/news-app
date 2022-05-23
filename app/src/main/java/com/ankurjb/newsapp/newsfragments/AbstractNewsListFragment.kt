@@ -2,22 +2,19 @@ package com.ankurjb.newsapp.newsfragments
 
 import android.os.Bundle
 import android.view.View
-import androidx.fragment.app.activityViewModels
 import com.ankurjb.newsapp.base.ViewBindingFragment
 import com.ankurjb.newsapp.databinding.FragmentNewsListBinding
 import com.ankurjb.newsapp.isGone
 import com.ankurjb.newsapp.isVisible
+import com.ankurjb.newsapp.model.Article
 import com.ankurjb.newsapp.model.Either
-import com.ankurjb.newsapp.model.TopNews
+import com.ankurjb.newsapp.model.News
 import com.ankurjb.newsapp.newsfragments.adapter.NewsListAdapter
 import com.ankurjb.newsapp.showMessage
-import com.ankurjb.newsapp.topnews.TopNewsViewModel
 
-class AbstractNewsListFragment : ViewBindingFragment<FragmentNewsListBinding>(
+abstract class AbstractNewsListFragment : ViewBindingFragment<FragmentNewsListBinding>(
     FragmentNewsListBinding::inflate
 ) {
-
-    private val viewModel: TopNewsViewModel by activityViewModels()
 
     private lateinit var adapter: NewsListAdapter
 
@@ -25,17 +22,14 @@ class AbstractNewsListFragment : ViewBindingFragment<FragmentNewsListBinding>(
         super.onViewCreated(view, savedInstanceState)
 
         adapter = NewsListAdapter {
-            viewModel.updateNewsDetails(it)
+            updateNewsDetails(it)
         }
         binding.newsListRecyclerView.adapter = adapter
-
-        viewModel.topNewsLiveData.observe(viewLifecycleOwner) { response ->
-            response?.let { updateUI(it) }
-        }
-
     }
 
-    private fun updateUI(state: Either<TopNews>) {
+    abstract fun updateNewsDetails(article: Article)
+
+    fun updateUI(state: Either<News>) {
         when (state) {
             is Either.Success -> {
                 binding.progressCircular.isGone()
@@ -52,10 +46,5 @@ class AbstractNewsListFragment : ViewBindingFragment<FragmentNewsListBinding>(
                 binding.progressCircular.isVisible()
             }
         }
-    }
-
-    companion object {
-        const val TAG = "AbstractNewsListFragment"
-        fun build() = AbstractNewsListFragment()
     }
 }

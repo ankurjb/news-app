@@ -1,6 +1,6 @@
 package com.ankurjb.newsapp
 
-import com.ankurjb.newsapp.model.TopNews
+import com.ankurjb.newsapp.model.News
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -11,5 +11,11 @@ interface NewsAPI {
     suspend fun getTopNews(
         @Query("country") cityName: String = "in",
         @Query("apiKey") secretKey: String = "9c7351df598940f7a6f0d063581f2f83"
-    ): Response<TopNews>
+    ): Response<News>
+
+    @GET("everything")
+    suspend fun getLatestNews(
+        @Query("q") query: String = "india",
+        @Query("apiKey") secretKey: String = "9c7351df598940f7a6f0d063581f2f83"
+    ): Response<News>
 }
