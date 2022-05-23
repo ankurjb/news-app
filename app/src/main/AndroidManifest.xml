@@ -18,11 +18,11 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".latestnews.LatestNewsActivity"
+            android:name="com.ankurjb.latestnews.LatestNewsActivity"
             android:exported="false"
             android:launchMode="singleTask" />
         <activity
-            android:name=".topnews.TopNewsActivity"
+            android:name="com.ankurjb.topnews.TopNewsActivity"
             android:exported="true"
             android:launchMode="singleTask">
             <intent-filter>

@@ -11,6 +11,11 @@
         <entry key="app/src/main/res/layout/fragment_news_details.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_news_list.xml" value="0.1638888888888889" />
         <entry key="app/src/main/res/layout/news_list_view.xml" value="0.28888888888888886" />
+        <entry key="core/src/main/res/layout/fragment_news_details.xml" value="0.2359375" />
+        <entry key="core/src/main/res/layout/fragment_news_list.xml" value="0.2359375" />
+        <entry key="core/src/main/res/layout/news_list_view.xml" value="0.2359375" />
+        <entry key="latestnews/src/main/res/layout/activity_latest_news.xml" value="0.2359375" />
+        <entry key="latestnews/src/main/res/layout/bottom_news_selector.xml" value="0.2359375" />
       </map>
     </option>
   </component>

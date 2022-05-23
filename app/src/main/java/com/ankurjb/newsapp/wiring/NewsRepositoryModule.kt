@@ -1,25 +1,23 @@
 package com.ankurjb.newsapp.wiring
 
-import com.ankurjb.newsapp.latestnews.network.LatestNewsRepository
-import com.ankurjb.newsapp.latestnews.network.LatestNewsRepositoryImpl
-import com.ankurjb.newsapp.topnews.network.TopNewsRepository
-import com.ankurjb.newsapp.topnews.network.TopNewsRepositoryImpl
+import com.ankurjb.latestnews.LatestNewsExecutor
+import com.ankurjb.topnews.TopNewsExecutor
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ViewModelComponent
+import dagger.hilt.android.components.ActivityComponent
 
 @Module
-@InstallIn(ViewModelComponent::class)
+@InstallIn(ActivityComponent::class)
 abstract class NewsRepositoryModule {
     @Binds
-    abstract fun bindTopNewsRepository(
-        topNewsRepositoryImpl: TopNewsRepositoryImpl
-    ): TopNewsRepository
+    abstract fun bindTopNewsExecutor(
+        topNewsExecutorImpl: TopNewsExecutorImpl
+    ): TopNewsExecutor
 
     @Binds
-    abstract fun bindLatestNewsRepository(
-        latestNewsRepositoryImpl: LatestNewsRepositoryImpl
-    ): LatestNewsRepository
+    abstract fun bind(
+        latestNewsExecutorImpl: LatestNewsExecutorImpl
+    ): LatestNewsExecutor
 
 }
