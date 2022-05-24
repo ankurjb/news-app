@@ -9,5 +9,9 @@ class TopNewsRepositoryImpl @Inject constructor(
     private val newsClient: NewsClient
 ) : TopNewsRepository {
 
-    override suspend fun getTopNews(): Either<News> = newsClient.getTopNews()
+    override suspend fun getTopNews(
+        pageNumber: Int
+    ): Either<News> = newsClient.getTopNews(
+        pageNumber
+    )
 }

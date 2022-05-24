@@ -8,9 +8,13 @@ import kotlinx.coroutines.withContext
 class NewsClient @Inject constructor(
     private val newsAPI: NewsAPI
 ) {
-    suspend fun getTopNews() = withContext(Dispatchers.IO) {
+    suspend fun getTopNews(
+        pageNumber: Int
+    ) = withContext(Dispatchers.IO) {
         val topNews = try {
-            val response = newsAPI.getTopNews()
+            val response = newsAPI.getTopNews(
+                page = pageNumber
+            )
             if (response.isSuccessful && response.body() != null) {
                 Either.Success(response.body()!!)
             } else {
@@ -22,9 +26,13 @@ class NewsClient @Inject constructor(
         return@withContext topNews
     }
 
-    suspend fun getLatestNews() = withContext(Dispatchers.IO) {
+    suspend fun getLatestNews(
+        pageNumber: Int
+    ) = withContext(Dispatchers.IO) {
         val latestNews = try {
-            val response = newsAPI.getLatestNews()
+            val response = newsAPI.getLatestNews(
+                page = pageNumber
+            )
             if (response.isSuccessful && response.body() != null) {
                 Either.Success(response.body()!!)
             } else {

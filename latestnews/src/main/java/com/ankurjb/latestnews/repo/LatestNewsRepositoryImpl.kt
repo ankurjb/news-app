@@ -9,5 +9,9 @@ class LatestNewsRepositoryImpl @Inject constructor(
     private val newsClient: NewsClient
 ) : LatestNewsRepository {
 
-    override suspend fun getLatestNews(): Either<News> = newsClient.getLatestNews()
+    override suspend fun getLatestNews(
+        pageNumber: Int
+    ): Either<News> = newsClient.getLatestNews(
+        pageNumber
+    )
 }

@@ -26,7 +26,7 @@ class TopNewsViewModel @Inject constructor(
     fun getTopNews() {
         viewModelScope.launch {
             _topNewsLiveData.value = Either.Loading("")
-            _topNewsLiveData.value = topNewsRepository.getTopNews()
+            _topNewsLiveData.value = topNewsRepository.getTopNews(1)
         }
     }
 

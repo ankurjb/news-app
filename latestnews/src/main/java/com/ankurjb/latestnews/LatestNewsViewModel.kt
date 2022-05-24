@@ -26,7 +26,7 @@ class LatestNewsViewModel @Inject constructor(
     fun getLatestNews() {
         viewModelScope.launch {
             _latestNewsLiveData.value = Either.Loading("")
-            _latestNewsLiveData.value = latestNewsRepository.getLatestNews()
+            _latestNewsLiveData.value = latestNewsRepository.getLatestNews(1)
         }
     }
 
