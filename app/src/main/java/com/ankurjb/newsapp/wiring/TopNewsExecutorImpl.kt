@@ -6,8 +6,8 @@ import com.ankurjb.topnews.TopNewsActivity
 import com.ankurjb.topnews.TopNewsExecutor
 import javax.inject.Inject
 
-class TopNewsExecutorImpl @Inject constructor(): TopNewsExecutor {
+class TopNewsExecutorImpl @Inject constructor() : TopNewsExecutor {
     override fun getLatestNewsIntent(context: TopNewsActivity): Intent {
-        return Intent(context, LatestNewsActivity::class.java)
+        return LatestNewsActivity.Companion.Args("TopNews").build(context)
     }
 }

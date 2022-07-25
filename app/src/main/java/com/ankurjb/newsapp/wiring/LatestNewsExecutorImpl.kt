@@ -8,6 +8,6 @@ import javax.inject.Inject
 
 class LatestNewsExecutorImpl @Inject constructor() : LatestNewsExecutor {
     override fun getTopNewsIntent(context: LatestNewsActivity): Intent {
-        return Intent(context, TopNewsActivity::class.java)
+        return TopNewsActivity.Companion.Args("TopNews").build(context)
     }
 }

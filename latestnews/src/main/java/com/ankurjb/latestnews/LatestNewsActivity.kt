@@ -1,8 +1,12 @@
 package com.ankurjb.latestnews
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.fragment.app.commit
+import com.ankurjb.core.TAG
 import com.ankurjb.core.base.ViewBindingActivity
 import com.ankurjb.core.model.Article
 import com.ankurjb.latestnews.databinding.ActivityLatestNewsBinding
@@ -20,9 +24,14 @@ class LatestNewsActivity : ViewBindingActivity<ActivityLatestNewsBinding>(
     @Inject
     lateinit var latestNewsExecutor: LatestNewsExecutor
 
+    lateinit var args: Args
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setUpBottomBar()
+        args = from(intent)
+
+        Log.d(TAG, "onCreate: $args")
 
         addNewsListFragment()
 
@@ -64,6 +73,20 @@ class LatestNewsActivity : ViewBindingActivity<ActivityLatestNewsBinding>(
         latestNews.isEnabled = false
         topNews.setOnClickListener {
             startActivity(latestNewsExecutor.getTopNewsIntent(this@LatestNewsActivity))
+        }
+    }
+
+    companion object {
+        private const val KEY = "KEY"
+
+        private fun from(intent: Intent) = Args(
+            name = intent.getStringExtra(KEY) ?: ""
+        )
+
+        data class Args(val name: String) {
+            fun build(context: Context) = Intent(context, LatestNewsActivity::class.java).apply {
+                putExtra(KEY, name)
+            }
         }
     }
 }

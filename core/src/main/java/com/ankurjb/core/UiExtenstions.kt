@@ -17,3 +17,5 @@ fun View.isGone() {
 fun View.isVisible() {
     this.isVisible = true
 }
+
+const val TAG = "MyText"

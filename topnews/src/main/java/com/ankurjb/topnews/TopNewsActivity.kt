@@ -1,6 +1,9 @@
 package com.ankurjb.topnews
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.fragment.app.commit
 import com.ankurjb.core.base.ViewBindingActivity
@@ -19,13 +22,17 @@ class TopNewsActivity : ViewBindingActivity<ActivityTopNewsBinding>(
     @Inject
     lateinit var topNewsExecutor: TopNewsExecutor
 
+    private lateinit var args: Args
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        args = from(intent)
         setUpBottomBar()
 
         addNewsListFragment()
-
+        Log.d("MyText", "onCreate: 1")
+        viewModel.update()
+        Log.d("MyText", "onCreate: 2")
         viewModel.getTopNews()
         viewModel.newsDetailsLiveData.observe(this) {
             addNewsDetailsFragment(it)
@@ -63,6 +70,20 @@ class TopNewsActivity : ViewBindingActivity<ActivityTopNewsBinding>(
                 ).build(),
                 TopNewsDetailsFragment.TAG
             )
+        }
+    }
+
+    companion object {
+        private const val KEY = "KEY"
+
+        fun from(intent: Intent) = Args(
+            name = intent.getStringExtra(KEY) ?: ""
+        )
+
+        data class Args(val name: String) {
+            fun build(context: Context) = Intent(context, TopNewsActivity::class.java).apply {
+                putExtra(KEY, name)
+            }
         }
     }
 }
